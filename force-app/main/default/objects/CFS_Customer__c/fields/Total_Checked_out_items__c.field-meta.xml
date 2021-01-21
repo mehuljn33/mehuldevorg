@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Checked_out_items__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Checked out items</label>
+    <summaryFilterItems>
+        <field>CMS_Customer_Item__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Check out</value>
+    </summaryFilterItems>
+    <summaryForeignKey>CMS_Customer_Item__c.CSF_Customer__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

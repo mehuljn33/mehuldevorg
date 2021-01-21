@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reparenting_of_lookup</fullName>
+    <active>true</active>
+    <description>cannot change the candidate name once entered through lookup field</description>
+    <errorConditionFormula>AND ( NOT (ISNEW()) ,  ISCHANGED( Candidate__c ))</errorConditionFormula>
+    <errorMessage>Reparenting of lookup field not allowed</errorMessage>
+</ValidationRule>
