@@ -1,0 +1,113 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true"
+            applyHTmlTag="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:slds />
+        </head>
+        <body class="slds-scope">
+<div class="slds-grid slds-wrap">
+  <div class="slds-size_1-of-4">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"> mehul </div>
+  </div>
+  <div class="slds-size_1-of-4">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"> jain </div>
+  </div>
+  <div class="slds-size_2-of-4">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"> salesforce </div>
+  </div>
+</div>
+
+<div class=" slds-size_3-of-4">
+  <div class="slds-media  slds-media_responsive">
+    <div class="slds-media__figure">
+      <span class="slds-avatar slds-avatar_large">
+        <img alt="Person name" src="{!URLFOR($Resource.SLDS201, '/assets/images/avatar1.jpg')}"  title="User avatar" />
+      </span>
+    </div>
+    <div class="slds-media__body">
+    <p> Contact person name</p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="slds-grid slds-wrap">
+  <div class="slds-size_1-of-2">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"> 
+    <ul class="slds-timeline">
+  <li>
+    <div class="slds-timeline__item">
+      <span class="slds-assistive-text">Task</span>
+      <div class="slds-media">
+        <div class="slds-media__body">
+          <div class="slds-media slds-timeline__media slds-timeline__media_task">
+            <div class="slds-media__figure slds-timeline__icon">
+              <div class="slds-icon_container slds-icon-standard-task" title="task">
+                <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#task" />
+                </svg>
+              </div>
+            </div>
+            <div class="slds-media__body">
+              <div class="slds-media">
+                <div class="slds-media__figure">
+                  <span class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-1" value="on" />
+                    <label class="slds-checkbox__label" for="checkbox-1">
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label slds-assistive-text">mark-complete</span>
+                    </label>
+                  </span>
+                </div>
+                <div class="slds-media__body">
+                  <h3 class="slds-truncate" title="Review proposals for EBC deck with larger team and have marketing review this"><a href="javascript:void(0);">Review proposals for EBC deck with larger team and have marketing review this</a></h3>
+                  <ul class="slds-list_horizontal slds-wrap">
+                    <li class="slds-m-right_large">
+                      <span class="slds-text-title">Contact:</span>
+                      <span class="slds-text-body_small"><a href="javascript:void(0);">Lei Chan</a></span>
+                    </li>
+                    <li class="slds-m-right_large">
+                      <span class="slds-text-title">Assigned to:</span>
+                      <span class="slds-text-body_small"><a href="javascript:void(0);">Betty Mason</a></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-media__figure slds-media__figure_reverse">
+          <div class="slds-timeline__actions">
+            <p class="slds-timeline__date">Feb 24</p>
+            <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More Options for Task, Review proposals">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
+              </svg>
+              <span class="slds-assistive-text">More Options for Task, Review proposals</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+    
+    </div>
+  </div>
+  <div class="slds-size_1-of-2">
+    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"> 
+    2nd column
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+        </body>
+    </html>
+</apex:page>

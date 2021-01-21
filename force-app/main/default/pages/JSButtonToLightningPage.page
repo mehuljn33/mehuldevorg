@@ -1,0 +1,41 @@
+<apex:page >
+ 
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script src="/soap/ajax/36.0/connection.js"></script>
+    <script src="/soap/ajax/36.0/apex.js"></script>
+           
+    <script>  
+      window.onload=function(){
+       sforce.connection.sessionId = '{!$Api.Session_ID}';
+     
+         var buttonid = "{!$CurrentPage.parameters.buttonid}";
+         alert('in init');
+         if(buttonid == 'contactDept'){
+           alert(buttonid);
+           contactDept();
+         } 
+      }
+        function contactDept(){   
+          var department = "{!$CurrentPage.parameters.department}";
+          if(isLightning()){         
+            sforce.one.createRecord(Candidate__c);
+          }
+          else{
+              alert('in else');
+              window.location.href='/a05/e?{!$Setup.FieldIds__c.Candidate_Depart__c}='+department+'&retURL=%2Fa05%2Fo';
+          }
+        }
+        
+        function isLightning(){
+         if(String(sforce.one) != 'undefined'){
+           return true;
+         }
+         else{
+         return false;     
+         }
+      }
+        
+     </script>
+
+
+</apex:page>

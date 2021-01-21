@@ -1,0 +1,40 @@
+<template>
+    <lightning-layout horizontal-align="space" class="slds-grid slds-wrap">
+        <lightning-layout-item class="slds-col slds-size_8-of-12">
+            <lightning-input type="text" value={searchKey} onchange={onInputClick} onkeypress={checkEnter}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-col slds-size_2-of-12">
+
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-col slds-size_2-of-12 slds-p-around_medium" style="margin-top: 1%;">
+            <lightning-button label="Search" onclick={searchAccount}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_6-of-12">
+            <c-contact-selector accounts={accList} ongetdetail={displaySelected}></c-contact-selector>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <template if:true={selectedContact}>
+                <lightning-card class="slds-p-around_medium">
+                    <lightning-layout class="slds-p-around_large">
+                        <lightning-layout-item>
+                            The account details for  are here : 
+                            <p>
+                                Id : {selectedContact.Id} <br/>
+                                Name : {selectedContact.Name} <br/>
+                                
+                                <lightning-input label="Phone" type="text" value={contactPhone} onchange={onclickphone} ></lightning-input>
+                                phone value = {contactPhone}
+                            </p>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <lightning-button label="Save" onclick={saveSelected}></lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>    
+                </lightning-card>
+            </template> 
+        </div>
+    </div>
+</template>

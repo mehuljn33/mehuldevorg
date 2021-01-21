@@ -1,0 +1,41 @@
+<template>
+    <template if:true={showItemTable}>
+    <div class="slds-grid slds-wrap">
+        <lightning-card title="List of Items">
+            
+            <lightning-datatable
+                data={data}
+                columns={columns}
+                key-field="Id"
+                onrowselection={pushToList}
+            > 
+            </lightning-datatable>
+            <center><lightning-button label="Submit" onclick={showDetailed} class="slds-p-around_medium"></lightning-button></center>
+        </lightning-card>
+    </div>
+    </template>
+
+    <template if:true={showDetailSection}>
+        <div class="slds-grid slds-wrap">
+            <template for:each={listItems} for:item="item">
+                <div class="slds-col slds-size_6-of-12 slds-p-around_medium" key={item}>
+                    <c-hello-web-component record-id={item} ongetrelated={displayRelated}></c-hello-web-component>
+                </div>
+            </template>
+        </div>
+        <div class="slds-p-around_medium">
+                <lightning-button label="Back" onclick={backToItemTable} class="slds-p-around_medium"></lightning-button>
+        </div>
+    </template>
+
+    <template if:true={showRelatedSection}>
+            <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_medium" >
+                        <c-related-customer-items record-id={selectedItem}></c-related-customer-items>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-p-around_medium">
+                            <lightning-button label="Back" onclick={backToDetail}></lightning-button>
+                    </div>
+            </div>
+        </template>
+</template>

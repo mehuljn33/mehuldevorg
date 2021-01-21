@@ -1,0 +1,137 @@
+<apex:page standardcontroller="CFS_Item__c">
+    <!---<apex:includeLightning />
+    <div id="lwcDemo" />
+    <script>
+    $Lightning.use("c:TestLWCinAuraApp", function() {
+        $Lightning.createComponent("c:helloWebComponent", {
+            //pass parameter values to lwc js controller
+            objName : "Account" // optional parameter, I already declared value in lwc js controller.
+        },
+        "lwcDemo",
+            function(component) {
+             console.log("Lightning Web Component created Successfully!!");
+              // extend the functionality as per your requirement
+            }
+       );
+    });
+    </script>-->
+    test data
+</apex:page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!----------<apex:page >
+<div><input type='file' title="Choose a video please" id="aa" onchange="pressed()" style="width:90px;
+    color:transparent;"/><label id="fileLabel">Choose file</label></div>
+
+
+
+
+<script>
+window.pressed = function(){
+    var a = document.getElementById('aa');
+    if(a.value == "")
+    {
+        fileLabel.innerHTML = "Choose file";
+    }
+    else
+    {
+        var theSplit = a.value.split('\\');
+        fileLabel.innerHTML = theSplit[theSplit.length-1];
+    }
+};
+</script>
+
+</apex:page>
+
+<apex:page controller="renderFile">
+  <script>
+      function demo() {
+          alert();
+      }
+  </script>
+    <apex:form id="form">
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+                <apex:actionRegion id="area51" renderRegionOnly="false">
+                    <apex:commandButton value="Something" reRender="form" action="{!reRender}"/>
+                    <apex:actionfunction name="demo" action="{!getfile}" rerender="fileName"/>
+                    <apex:outputPanel id="fileName">filename is : {!fileName}</apex:outputPanel>
+                </apex:actionRegion>
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                <apex:repeat value="{!items}" var="value">
+                    <apex:outputText >{!value}</apex:outputText>
+                </apex:repeat>
+                <apex:outputPanel >
+                <apex:outputPanel onclick="demo()">choose file</apex:outputPanel>
+                <apex:inputFile contentType="{!contentType}" fileName="{!fileName}" value="{!fileBody}" style="opacity:0" />
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>-->
+
+
+
+
+
+
+
+
+<!--<apex:page standardController="Account" recordSetVar="accounts">
+    
+    <analytics:reportChart reportId="00O28000004vYsm"  showRefreshButton="true">
+    </analytics:reportChart>
+    <apex:pageBlock title="Hello {!$User.FirstName}!">
+        You are displaying contacts from the {!account.name} account. 
+        Mouse over a contact's name to view his or her details.
+    </apex:pageBlock>
+    <apex:pageBlock title="Contacts">
+        <apex:form >
+            <apex:dataTable value="{!account.Contacts}" var="contact" cellPadding="4" 
+                               border="1">
+                  <apex:column >
+                      <apex:outputPanel >
+                     
+                          <apex:actionSupport event="onmouseover" rerender="detail"> 
+                              <apex:param name="cid" value="{!contact.id}"/>
+                          </apex:actionSupport> 
+                          {!contact.Name}
+                      </apex:outputPanel> 
+                  </apex:column>
+            </apex:dataTable>
+ 
+        <apex:selectList value="{!filterId}" >
+        <apex:selectoptions value="{!account.CleanStatus}" />
+        </apex:selectList>
+        
+  <apex:dataList var="a" value="{!accounts}" id="list">
+    {!a.name}
+  </apex:dataList>
+  
+        </apex:form>
+ 
+    </apex:pageBlock>
+    <apex:outputPanel id="detail">
+        <apex:actionStatus startText="Requesting...">
+            <apex:facet name="stop">
+                <apex:detail subject="{!$CurrentPage.parameters.cid}" relatedList="false" 
+                                title="false"/>
+            </apex:facet>
+        </apex:actionStatus>
+    </apex:outputPanel>
+</apex:page>-->

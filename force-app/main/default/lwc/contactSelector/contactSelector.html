@@ -1,0 +1,19 @@
+<template>
+    <lightning-layout class="slds-grid slds-wrap">
+        <template if:true={accounts} for:each={accounts} for:item="acc" for:index="index">
+            <div key={acc.Id} id={acc.Id} onclick={openDetail} style="cursor:pointer" class="slds-col slds-size_6-of-12 slds-p-around_medium"> 
+            <lightning-card >
+                <lightning-layout vertical-align="center" horizontal-align="spread" class="slds-p-around_medium">
+                    <lightning-layout-item>
+                    Name :   {acc.Name}
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        Phone :  {acc.Phone}
+                    </lightning-layout-item>
+                </lightning-layout> 
+            </lightning-card>
+           
+        </div>
+        </template>
+    </lightning-layout>
+</template>

@@ -1,0 +1,16 @@
+<apex:page Controller="AccNotesController" action="{!getAccPickList}"> 
+  <apex:form >
+  The details are :
+  <br/>
+ Email : <apex:outputField value="{!myUser.Email}"/><br/>
+ Name : <apex:outputField value="{!myUser.Name}"/><br/>
+ Alias : <apex:outputField value="{!myUser.Alias}"/><br/>
+
+<!--<apex:actionFunction name="getNotes"  action="{!getAccountNotes}"-->
+
+<apex:selectList value="{!accId}"  size="1" >
+<apex:selectOptions value="{!accList}"  ></apex:selectOptions>
+</apex:selectList>
+
+ </apex:form>
+  </apex:page>

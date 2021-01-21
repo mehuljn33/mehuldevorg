@@ -1,0 +1,35 @@
+<apex:page controller="ctlDepPickLst" docType="html-5.0">
+    <apex:form >
+        <apex:pageBlock >
+
+            <apex:pageBlockSection columns="2">
+
+               <apex:panelGrid columns="2" cellpadding="5%" cellspacing="5%">
+                    <apex:outputLabel value="Country"/>
+               
+     
+                          
+                    <apex:selectList size="1" value="{!country}" required="true">
+                        <apex:selectOptions value="{!countries}"/>
+                        <apex:actionSupport event="onchange" rerender="a"/>
+                    </apex:selectList>                
+              
+
+               
+                    <apex:outputLabel value="State"/>
+               
+         
+              
+                   <apex:outputPanel id="a">
+                    value selected : {!country}
+                    <apex:selectList size="1" value="{!state}" >
+                       
+                        <apex:selectOptions value="{!states}"/>
+                    </apex:selectList>
+                  </apex:outputPanel>
+               
+           </apex:panelGrid>
+            </apex:pageBlockSection>        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

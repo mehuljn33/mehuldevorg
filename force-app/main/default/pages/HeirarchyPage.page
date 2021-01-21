@@ -1,0 +1,5 @@
+<apex:page standardcontroller="Position__c" showHeader="true" sidebar="true">
+ <apex:pageblock title="Hierarchy">
+  <c:Heirarchy objectName="Position__c" FieldName="Position__c" RepersenterField="Name"/>
+ </apex:pageblock>
+</apex:page>

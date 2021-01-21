@@ -1,0 +1,26 @@
+<template >
+    <lightning-card title="Individual item details" class="slds-wrap slds-p-around_medium">
+       
+        <template if:true={recordId}>
+            <div class="slds-grid slds-wrap">
+                <lightning-card title={name} onclick={openRelated} style="cursor: pointer;">
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                        Book Name : {name}
+                    </div>
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                        Book Author : {author}
+                    </div>
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                        Book Publication : {publication}
+                    </div>
+                    <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                        <lightning-input-field>
+                            
+                        </lightning-input-field>
+                    </div>   
+                </lightning-card>
+            </div>
+            
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,71 @@
+<apex:component controller="DynamicHierarchyForBlogController">
+ 
+ <apex:attribute name="objectName" description="Name of Object." type="String" required="true" assignTo="{!objectApiName}"/>
+ <apex:attribute name="FieldName" description="Name of the field of the object." type="String" required="true" assignTo="{!fieldApiName}"/>
+ <apex:attribute name="RepersenterField" description="Name field of the object." type="String" required="true" assignTo="{!nameField}"/>
+ <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+ 
+ <div id="parentDiv"></div>
+ 
+    <style>
+     #parentDiv ul:first-child
+     {
+      padding: 0;
+     }
+     #parentDiv li
+     {
+      list-style: none;
+      padding: 10px 5px 0 5px;
+      position: relative;
+     }
+  #parentDiv li span 
+  {
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      /*border: 1px solid #999;*/
+      border-radius: 5px;
+      display: inline-block;
+      padding: 3px 8px;
+      cursor: pointer;
+  }
+  .selectedRecord
+  {
+   font-weight:bold; 
+   color:blue;
+  }
+    </style>
+    <script>
+      var accountMap = JSON.parse('{!jsonMapString}');
+      var accountValueMap = JSON.parse('{!jsonMapsobjectString}');
+      var cClass = '';
+  if("{!topParentId}".indexOf('{!$CurrentPage.parameters.id}') != -1)
+   cClass = 'selectedRecord';
+  var ul = '<ul><li id="{!topParentId}"  ><span class="' + cClass + '"  onclick="toggleChilds(\'' + '{!topParentId}' + '\',event)" ><b id="i{!topParentId}" class="minus" style="font-size: 1.5em;" >-</b>&nbsp;' +  accountValueMap['{!topParentId}'].{!RepersenterField} + '</span><span >ADD</span></li></ul>'  ;
+  $(ul).appendTo("#parentDiv");
+  appendUl('{!topParentId}','{!topParentId}');
+      function appendUl(key)
+      {
+       $.each( accountMap[key], function( index, value ) 
+       {
+      var dclass = '';
+      if(value.indexOf('{!$CurrentPage.parameters.id}') != -1)
+       dclass = 'selectedRecord';
+      var ul = '<ul class="' + key + '"><li id="' + value + '" ><span class="' + dclass + '" onclick="toggleChilds(\'' + value + '\',event)" ><b id="i' + value + '" class="minus" style="font-size: 1.5em;" >-</b>&nbsp;' + accountValueMap[value].{!RepersenterField} + "</span><span >ADD</span></li></ul>"  ;
+      $(ul).appendTo("#" + key);
+      if(value)
+       appendUl(value);
+   });
+      }
+      function toggleChilds(key,event)
+      {
+       $('.'+key).toggle('slow');
+       $('#i'+key).toggleClass('minus');
+       $('#i'+key).toggleClass('plus');
+       if($('#i'+key).hasClass("minus")) 
+        $('#i'+key).html("-");
+         if($('#i'+key).hasClass("plus")) 
+             $('#i'+key).html("+");
+       event.stopPropagation();
+      }
+    </script>
+</apex:component>

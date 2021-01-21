@@ -1,0 +1,33 @@
+<apex:page controller="ShoppingCartController" action="{!recalculate}">
+<apex:form >
+<apex:pageMessages id="err"></apex:pageMessages>
+<apex:pageblock >
+<apex:pageBlockSection id="main">
+
+<apex:pageBlockTable value="{!cart}" var="item" rules="rows" id="table">
+	<apex:column value="{!item.Name}"/>
+	<apex:column value="{!item.ProductCode}"/>
+	<apex:column value="{!item.Price__c}"/>    
+	<apex:column ><apex:inputField value="{!item.Quantity__c}" onchange="calc()"/></apex:column>       
+	<apex:column ><apex:outputField value="{!item.Subtotal__c}"/></apex:column>       
+	<apex:column >
+		<apex:commandButton value="remove" action="{!removeFromCart}" rerender="main">
+   			<apex:param name="IdParam" value="{!item.id}" assignTo="{!idToRemove}"/>
+		</apex:commandButton>
+	</apex:column>       
+</apex:pageBlockTable>
+    
+<apex:outputText >Grand Total : {!grandTotal} </apex:outputText>
+
+    
+<apex:actionFunction action="{!recalculate}" name="calc" rerender="err,main"/>        
+</apex:pageBlockSection>
+</apex:pageblock>
+
+</apex:form>
+
+<script type="javascript">
+
+</script>
+
+</apex:page>

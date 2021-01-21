@@ -1,0 +1,12 @@
+<aura:component>
+    <c:ChildComponent ComponentEvent1="{!c.handleEvent}"/>
+    <lightning:recordEditForm
+                              recordId="0030K00002R20jn"
+                              objectApiName = "Contact" >
+        <lightning:inputField fieldName="AccountId"/>
+        <lightning:inputField fieldName="FirstName"/>
+        <lightning:inputField fieldName="LastName"/>
+    
+    </lightning:recordEditForm>
+                          
+</aura:component>

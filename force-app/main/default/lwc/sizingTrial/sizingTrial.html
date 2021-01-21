@@ -1,0 +1,40 @@
+<template>
+    <lightning-layout title="Sizing Trial" horizontal-align="start" class="slds-grid slds-wrap"> 
+        <lightning-layout-item class="slds-p-around_small" size="2">
+            <lightning-card>
+                <lightning-layout-item class="slds-p-around_small">first block</lightning-layout-item>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-p-around_small" size="4">
+            <lightning-card>
+                <lightning-layout-item class="slds-p-around_small">second block</lightning-layout-item>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-p-around_small" size="3">
+            <lightning-card>
+                <lightning-layout-item class="slds-p-around_small">third block</lightning-layout-item>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-wrap slds-p-around_small" size="3">
+            <lightning-card >
+                <lightning-layout horizontal-align="start" size="12" class="slds-grid slds-wrap">
+                    <lightning-layout-item class="slds-size_1-of-1 slds-large-size_4-of-12 slds-p-around_small">item 189389 898989 555 5555</lightning-layout-item>
+                    <lightning-layout-item class="slds-size_1-of-1 slds-large-size_4-of-12 slds-p-around_small">item 2737 389 7387387 8978 889</lightning-layout-item>
+                    <lightning-layout-item class="slds-size_1-of-1 slds-large-size_4-of-12 slds-p-around_small">item 300 00000 00000 000 000</lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-combobox label="SLA Type" options={optionsSla} value={selectedSla} onchange={onchange}>
+
+            </lightning-combobox>
+            Value is : {selectedSla}
+        </lightning-layout-item>
+        <lightning-layout-item>
+            Account name : {accountName}
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

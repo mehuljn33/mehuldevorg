@@ -1,0 +1,7 @@
+<aura:component >
+    <aura:attribute name="objAcc" type="Account"/>
+    <br/><br/>
+    input
+    <lightning:inputfield name="Account Source" label="Account S" value="{!v.objAcc.AccountSource}"/>
+    <force:inputField value="{!v.objAcc.AccountSource}"/>
+</aura:component>

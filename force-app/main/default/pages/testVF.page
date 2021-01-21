@@ -1,0 +1,9 @@
+<apex:page controller="MyController">
+<apex:form >
+<!--<apex:inputText value="{!someValue}" id="a"/>-->
+
+<apex:commandButton action="{!incrementCounter}" value="Count!" rerender="a"/>
+<apex:outputText value="u" rendered="{!$ObjectType.Contact.fields.Name.Accessible}" />
+
+</apex:form>
+</apex:page>

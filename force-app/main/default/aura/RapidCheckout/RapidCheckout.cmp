@@ -1,0 +1,12 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ItemCode" type="String" default=""/>
+    <aura:attribute name="ItemCodeList" type="List"/> 
+                    
+    <lightning:card>
+    	<span onkeypress="{!c.addToCart}" class="slds-size--11-of-12">
+    		<lightning:input aura:id="body" label="" name="Body" placeholder="Enter Item Code..." value="{!v.ItemCode}" />
+		</span>
+    </lightning:card>
+    <lightning:button label="Submit" class="slds-button_brand" onclick="{!c.onSubmit }"  />
+        	
+</aura:component>

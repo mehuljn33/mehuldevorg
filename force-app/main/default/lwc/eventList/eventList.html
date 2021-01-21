@@ -1,0 +1,25 @@
+<template>
+    <div class="slds-wrap slds-grid">
+        <div class="slds-col slds-size-2_of_12">
+            <lightning-card title="Event List">
+                <template for:each={eventList} for:item="event" for:index="index">
+                    <div key={event.Id}>
+                        Event number : {index}
+                        Name : {event.Subject}<br/><br/>
+                    </div>
+                </template>
+            </lightning-card>
+        </div>
+        <div class="slds-col slds-size-10_of_12">
+            <lightning-card class="slds-p-around_medium">
+                <!--Map section will be displayed here-->
+                <div class="slds-p-around_medium">
+                    <lightning-map 
+                        map-markers={mapEventMarkers}
+                        markers-title={markersTitle}
+                    ></lightning-map>
+                </div>
+            </lightning-card>
+        </div>
+    </div>
+</template>

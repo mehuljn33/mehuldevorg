@@ -1,0 +1,53 @@
+<apex:page controller="XYZ_RegionWiseController" readOnly="true" showHeader="false" >
+    <apex:form >
+        <apex:pageMessages id="pageMesage"></apex:pageMessages>
+        <apex:actionFunction name="loadSales" action="{!loadSalesRep}" rerender="salesTable,pageMesage"/> 
+        <center>
+            <br/>
+            <h1> XYZ Ltd. Region wise Sales Rep Productivity Report FY {!CURRENT_FY}</h1><br/><br/>
+            <b>Select Region:</b><br/>
+            <apex:inputField value="{!objContact.XYZ_Region__c}" onchange="loadSales()"/>
+        </center> 
+        <br/><br/>
+        
+        
+        <apex:outputPanel id="salesTable">
+            <!--Main contact list-->
+            <apex:pageBlock title="Sales Rep Detail">
+                <apex:pageBlockTable value="{!lstContact}" var="objCon" rendered="{!lstContact.size > 0 && objContact.XYZ_Region__c != null}">
+                    <apex:column >
+                         <apex:facet name="header">Name</apex:facet>
+                         {!objCon.name}
+                        <apex:pageBlockTable value="{!objCon.opportunities__r}" var="objOpp">
+                            <apex:column value="{!objOpp.Name}"/>
+                            <apex:column value="{!objOpp.Amount}"/>
+                        </apex:pageBlockTable>
+                    </apex:column>
+
+                    <apex:column value="{!objCon.Email}"/>
+                    <apex:column >
+                        <apex:facet name="header">Contact</apex:facet>
+                        {!objCon.Phone}
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:outputPanel rendered="{!lstContact.size == 0 && objContact.XYZ_Region__c != null}">
+                    There are currently no records available for {!objContact.XYZ_Region__c} Region.
+                </apex:outputPanel>
+            </apex:pageBlock>
+            
+            <!--Top 3 contact list sorted by Custom Roll up summary field-->
+            <apex:pageBlock title="Top {!TOP_REP_SIZE} Sales Reps of current FY">
+                <apex:pageBlockTable value="{!lstTopReps}" var="objCon" rendered="{!lstTopReps.size > 0 && objContact.XYZ_Region__c != null}">
+                    <apex:column value="{!objCon.name}"/>
+                    <apex:column value="{!objCon.XYZ_Total_Deals__c}"/>
+                </apex:pageBlockTable>
+                <apex:outputPanel rendered="{!lstTopReps.size == 0 && objContact.XYZ_Region__c != null}">
+                    There are currently no records available for {!objContact.XYZ_Region__c} Region.
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+    </apex:form>
+    
+</apex:page>

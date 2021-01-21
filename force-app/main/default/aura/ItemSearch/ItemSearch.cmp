@@ -1,0 +1,356 @@
+<aura:component controller="ItemSearchController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<style>
+	.slds-modal__container{
+	max-width: 100rem !important;
+	width:100% !important;
+	}
+	</style> 
+       
+    <aura:attribute name="searchResult" type="List" />
+    <aura:attribute name="cartList" type="List" />
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="searchKeyword" type="String" />
+    <aura:attribute name="Message" type="boolean" default="false" />
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0" />
+    <aura:attribute name="DisplayCart" type="Boolean" default="false"/>
+    <aura:attribute name="PLValue" type="String" default="Books"/>
+    <aura:attribute name="paymentWindow" type ="Boolean" default ="false"/>
+    <aura:attribute name="SuccessMsg" type = "String" default = ""/>
+    <aura:attribute name="showResults" type = "Boolean" default = "false"/>
+    <aura:attribute name="SearchArea" type = "Boolean" default="false"/>
+    <aura:attribute name="totalAmount" type = "Integer" default="0"/>
+    <aura:attribute name="ItemCode" type="String" default=""/>
+    <aura:attribute name="rapidCheckout" type="Boolean" default="false"/>
+    <aura:attribute name="DefaultSelection" type="Boolean" default="true"/>
+    <aura:attribute name="LateFee" type="Integer" default="0"/>
+    <aura:attribute name="StartDateMessage" type="String" default=""/>
+    <aura:attribute name="EndDateMessage" type="String" default=""/>
+    <aura:attribute name="ProceedPayDisb" type="Boolean" default="false"/>
+    <aura:attribute name="CartMessage" type="String" default=""/>
+    <aura:attribute name="categoryMap" type="Map" />
+    
+    <aura:attribute name="SelectionRadio" type="List" default="[
+                                                       {'label': 'Rapid Checkout using Item code', 'value': 'Rapid'},
+                                                       {'label': 'Browse and Search Items', 'value': 'Browse'}
+                                                       ]"/> 
+    <aura:attribute name="RadioValue" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- SHOW LOADING SPINNER--> 
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    		{!v.SuccessMsg} 
+    <div class="slds-m-around_medium" style="height:600px; width : 1100px;">
+        
+        <!--<aura:if isTrue="{!v.LateFee > 0}">
+        This Customer has a total outstanding amount of INR {!v.LateFee}, please clear the dues before you can purchase more items.
+        </aura:if>-->
+        
+        <!-- selection between rapid checkout and browsing -->
+        <aura:if isTrue="{!v.DefaultSelection}">
+        <lightning:radioGroup name="Selection" 
+                          label="Select the mode "
+                          options="{! v.SelectionRadio }"
+                          value="{! v.RadioValue }"
+                          type="radio"
+                          onchange="{!c.toggleMode}"    
+                          />
+        </aura:if>
+        
+        <!-- RAPID CHECKOUT -->
+        
+        <aura:if isTrue = "{!v.rapidCheckout}">
+        <lightning:card>
+            <span onkeypress="{!c.addRapidCode}" class="slds-size--11-of-12">
+                <lightning:input aura:id="body" label="" name="Body" placeholder="Enter Item Code..." value="{!v.ItemCode}" />
+            </span><br/><br/>
+            
+            <center><lightning:button label="Go To Cart" class="slds-button_brand" onclick="{!c.goToCart }"  />
+        	</center>
+            </lightning:card>
+            
+        </aura:if>
+        
+       <!-- SEARCH INPUT AND SEARCH BUTTON--> 
+        <aura:if isTrue="{!v.SearchArea}">
+        <lightning:layout>
+            <lightning:layoutItem size="3" padding="around-small">
+                <lightning:select name="TypeOfItem" label="Select Type of Item" value="Books" aura:id="TypeOfItem"  >
+                     <option value="Books">Books</option>
+                     <option value="AV">Audio Video Equipments</option>
+                </lightning:select>
+            </lightning:layoutItem>    
+            <lightning:layoutItem size="3" padding="around-small">
+                <lightning:input value="{!v.searchKeyword}"
+                                 placeholder="Search here.."
+                                 aura:id="searchField"
+                                 label="Account Name"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" padding="around-small">
+                <!--<lightning:select name="Category" label="Choose Category" value="" aura:id="Category"  >
+                    <option value="">Choose..</option>
+                    <option value="Biography">Biography</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Children">Children</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Politics">Politics</option>
+                </lightning:select>-->
+                <lightning:select name="Category" label="Choose Category" value="" aura:id="Category"  >
+                    <option text="None" value="" />
+                    <aura:iteration items="{!v.categoryMap}" var="ind" indexVar="key" >
+                        <option text="{!ind.value}" value="{!ind.key}" />
+                    </aura:iteration>
+                </lightning:select>
+                
+            </lightning:layoutItem> 
+            <br/><br/>
+            <lightning:layoutItem size="3" padding="around-small">
+                <lightning:button onclick="{!c.Search}"
+                                  variant="brand"
+                                  label="Search"
+                                  iconName="utility:search"/> 
+            </lightning:layoutItem>
+        </lightning:layout>
+        </aura:if>
+        
+        
+        <!-- ERROR MESSAGE IF NOT RECORDS FOUND--> 
+        <aura:if isTrue="{!v.Message}">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">No Records Found...</h2>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+       
+        <!-- TABLE CONTENT--> 
+        <aura:if isTrue="{!v.showResults}">
+        <!-- TOTAL RECORDS BADGES--> 
+        <div class="slds-m-around_x-small">
+            Total Search results : <lightning:badge label="{!v.TotalNumberOfRecord}" />
+        </div>    
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th>           
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label"></span>
+                        </label>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="S.no">S.no</div>
+                    </th>
+                    <th scope="col">
+                        <aura:if isTrue="{!v.PLValue == 'Books'}">
+                        <div class="slds-truncate" title="Book Name">Book Name</div>
+                            <aura:set attribute="else">
+                                <div class="slds-truncate" title="Video Name">Video Name</div>
+                        
+                            </aura:set>
+                        </aura:if>
+                    </th>
+                    <th scope="col">
+                        <aura:if isTrue="{!v.PLValue == 'Books'}">
+                        <div class="slds-truncate" title="Book Author">Book Author</div>
+                            <aura:set attribute="else">
+                                <div class="slds-truncate" title="Video Director">Video Director</div>
+                        
+                            </aura:set>
+                        </aura:if>
+                        
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Category">Category</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Units available">Units available</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Purchase price">Purchase price</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody> 
+                <!--### display all records of searchResult attribute by aura:iteration ###-->
+                <aura:iteration items="{!v.searchResult}" var="acc" indexVar="count">
+                    <tr>
+                         <th>
+                            <label class="slds-checkbox">
+                                <ui:inputCheckbox aura:id="checkContact" value="" text="{!acc.Id}"/>
+                                <span class="slds-checkbox--faux" />
+                                <span class="slds-form-element__label"></span>
+                            </label>
+                        </th>
+                        <td>
+                            <div class="slds-truncate">{!count + 1}</div>
+                        </td>
+                        <td>
+                            <aura:if isTrue="{!v.PLValue == 'Books'}">
+                            <div class="slds-truncate">{!acc.Book_name__c}</div>
+                                <aura:set attribute="else">
+                                    <div class="slds-truncate">{!acc.Video_Name__c}</div>
+                                </aura:set>    
+                            </aura:if> 
+                            
+                        </td>
+                        <td>
+                            <aura:if isTrue="{!v.PLValue == 'Books'}">
+                            <div class="slds-truncate">{!acc.Book_Author__c}</div>
+                                 <aura:set attribute="else">
+                                     <div class="slds-truncate">{!acc.Video_Director__c }</div>
+                                </aura:set>    
+                            </aura:if>
+                            
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.CFS_Category__c}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.Units_Available__c}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{!acc.CFS_Purchase_Price__c}</div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+            </table>
+            <div><br/></div>    
+        <span>
+            <lightning:button label="Add to Cart" class="slds-button_brand" onclick="{!c.handleSelectedContacts }"  />
+        </span>
+        <div style="display:inline; margin-left:700px">
+        <span>
+            <lightning:button label="Go to Cart" class="slds-button_brand" onclick="{!c.goToCart }"  />
+        </span> 
+         
+        </div>  <div><br/></div>
+            
+        </aura:if>
+        
+        
+        <div></div>
+        <!-- -cart table- -->
+        
+        <aura:if isTrue="{!v.DisplayCart}">
+            <div style="font-color : red">
+                {!v.StartDateMessage}
+            </div><br/>
+             <div style="font-color : red">
+                 {!v.EndDateMessage}
+            </div><br/>
+            <div style="font-color : red">
+                {!v.CartMessage}
+            </div><br/>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        
+                        <th scope="col">
+                            <div class="slds-truncate" title="S.no">S.no</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Item Name">Item Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Item type">Item Type</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Start Date">Start Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="End Date">End Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Amount">Amount</div>
+                        </th>
+                       	<th scope="col">
+                            <div class="slds-truncate" title="Take away mode">Take away mode</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    
+                    <aura:iteration items="{!v.cartList}" var="acc" indexVar="count">
+                        <tr>
+                            
+                            <td>
+                                <div class="slds-truncate">{!count + 1}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" >
+                                    <lightning:input type="text" aura:id="ItemName" value="{!acc.Item_Name__c}" disabled="true">
+                                    </lightning:input>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" >
+                                    <lightning:input type="text" aura:id="ItemType" value="{!acc.Item_type__c}" disabled="true">
+                                    </lightning:input>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">
+                                   <lightning:input type="date" aura:id="startDate" value="{!acc.Start_Date__c}" onchange="{!c.calculatePrice}">
+                                   </lightning:input>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">
+                                   <lightning:input type="date" aura:id="endDate" value="{!acc.End_Date__c}" onchange="{!c.calculatePrice}">
+                                   </lightning:input>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" >
+                                    <lightning:input type="text" aura:id="BorrowedPrice" value="{!acc.Borrowed_Price__c}" disabled="true">
+                                    </lightning:input>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" >
+                                    <lightning:select name="status" value="{!acc.Status__c}" aura:id="status" onchange="{!c.calculatePrice}" >
+                                     <option value="Borrow">Borrow</option>
+                                     <option value="Check Out">Check out</option>
+                                	</lightning:select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" >
+                                    <a onclick="{!c.removeItem}" data-record="{!count}">
+                                    <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                    <span class="slds-assistive-text">Remove</span>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <div onclick="{!c.calculatePrice}">Total Amount : {!v.totalAmount}</div>
+            <div>
+            <br/>
+            <lightning:button label="Proceed for Payment" class="slds-button_brand" onclick="{!c.showPayment }" disabled="{!v.ProceedPayDisb}" />
+        	
+            </div>
+        </aura:if>
+        
+		<aura:if isTrue="{!v.paymentWindow}">
+        	    <lightning:select name="PaymentMethod" label="Select Type of Method for Payment" value="Cash" aura:id="PaymentMethod"  >
+                    <option value="Cash">Cash</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Card">Card</option>
+                    <option value="Mobile Wallet">Mobile Wallet</option>
+            </lightning:select><br/><br/>
+            Amount Payble after discount : {!v.totalAmount}<br/><br/>
+            <lightning:button label="Finish" class="slds-button_brand" onclick="{!c.insertRecords }"  />
+        </aura:if>        
+    </div>
+    
+</aura:component>

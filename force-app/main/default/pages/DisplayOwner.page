@@ -1,0 +1,26 @@
+<apex:page standardController="Account" extensions="DisplayOwnerController" action="{!displayOwner}">
+<apex:form >
+
+<table border ="0">
+
+<tr>
+<td>{!message}</td>
+</tr>
+
+<tr>
+<td>{!name}</td>
+</tr>
+
+<tr>
+<td>{!phone}</td>
+</tr>
+
+<tr>
+<td>{!email}</td>
+</tr>
+
+
+</table>
+
+</apex:form>
+</apex:page>

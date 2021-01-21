@@ -1,0 +1,43 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="name" type="string"/>
+    <aura:attribute name="email" type="string"/>
+    <aura:attribute name="bday" type="string"/>
+   <div>
+   <form>
+     
+
+          <ui:inputText aura:id="UserName" label="Name"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.name}"
+                        required="true"/>
+              <ui:inputText aura:id="Useremail" label="Email"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.email}"
+                        required="true"/>
+                  <ui:inputText aura:id="UserBday" label="Bday"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.bday}"
+                        required="true"/>
+    <ui:button label="Submit" 
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.navigate}"/>
+              <ui:button label="Cancel" 
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.Close}"/>
+           
+    </form> 
+       
+       <lightning:recordViewForm objectApiName="User" recordId="">
+           <lightning:inputField fieldName="Name" />
+       </lightning:recordViewForm>
+           
+           
+       
+  </div>
+
+</aura:component>

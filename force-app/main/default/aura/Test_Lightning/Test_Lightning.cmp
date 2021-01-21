@@ -1,0 +1,108 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+   <!-- <aura:attribute type="String" name="FirstName"/>
+    <aura:attribute type="String" name="LastName"/>
+   
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <div>
+    	{!v.FirstName}
+        
+     </div>
+
+    <ui:button label="First" press="{!c.myAction}"/>
+    <ui:button label="Second" press="{!c.myAction}"/>
+    
+    
+    
+    <aura:attribute name="values"
+                    type="String[]"
+                    access="private" />
+    <aura:attribute name="dragid"
+                    type="Integer"
+                    access="private" />
+    <aura:handler name="init"
+                  value="{!this}"
+                  action="{!c.doInit}" />
+    <div class="droparea"
+         ondragover="{!c.cancel}"
+         ondragenter="{!c.cancel}"
+         ondrop="{!c.drop}">
+        <aura:iteration items="{!v.values}"
+                        indexVar="index"
+                        var="value">
+            <div class="row"
+                 draggable="true"
+                 ondragstart="{!c.dragstart}"
+                 data-drag-id="{!index}">
+                {!value}
+            </div>
+        </aura:iteration>
+    </div>
+    -->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+     <aura:attribute type ="string" name = "met2" default="default"/>
+    <ui:inputtext value = '{!v.met2}'/>
+    <ui:button press = '{!c.method2}' label="test button"/>
+    
+    
+    
+    <div class="slds-m-around--xx-large">
+        <lightning:card title="Lead" iconName="standard:lead" class="slds-p-around_medium">
+            <lightning:recordEditForm aura:id="leadCreateForm" objectApiName="Lead" onsuccess="{!c.handleOnSuccess}">
+                <lightning:messages />
+                 
+                 
+<div class="slds-grid">
+                     
+<div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="FirstName"></lightning:inputField>
+                    </div>
+ 
+                     
+<div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="LastName"></lightning:inputField>
+                    </div>
+ 
+                </div>
+ 
+                 
+                 
+<div class="slds-grid">
+                     
+<div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="Email"></lightning:inputField>
+                    </div>
+ 
+                     
+<div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="Phone"></lightning:inputField>
+                    </div>
+ 
+                </div>
+ 
+                 
+                 
+<div class="slds-grid">
+                     
+<div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="Company"></lightning:inputField>
+
+    </div>
+ 
+    <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                        <lightning:inputField fieldName="IndividualId"></lightning:inputField>
+                    </div>
+                </div>
+ 
+                 
+                <lightning:button type="submit" label="Save" variant="brand"/>
+            </lightning:recordEditForm>
+        </lightning:card>
+    </div>
+    
+    
+    
+    
+    
+    
+</aura:component>

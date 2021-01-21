@@ -1,0 +1,10 @@
+<aura:component controller="lightController">
+    <aura:attribute type="String" name="name"/>
+     <aura:attribute type="Account" name="acc"/>
+	<div>
+        <lightning:input name="input1" label="Enter Account Name" value="{!v.name}"/>
+    </div>
+   acc name : {!v.acc.name}
+    v name : {!v.name}
+     <ui:button label="First" press="{!c.myAction}"/>
+</aura:component>

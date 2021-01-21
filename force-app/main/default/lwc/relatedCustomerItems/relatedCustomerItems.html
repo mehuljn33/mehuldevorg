@@ -1,0 +1,14 @@
+<template>
+    <div class="slds-grid slds-wrap">
+        <lightning-card title="Related customer Items" class="slds-p-around_large">
+            <lightning-datatable
+                data={lstCustItems}
+                columns={columns}
+                hide-checkbox-column=true
+                key-field="Id"
+            >
+            </lightning-datatable>
+            
+        </lightning-card>
+    </div>
+</template>

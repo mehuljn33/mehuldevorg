@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="File upload section">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_9-of-12 slds-p-around_large">
+                <lightning-file-upload
+                label="Upload file"
+                record-id={recordId}
+                onuploadfinished={displayName}
+                >
+                </lightning-file-upload>  
+            </div>
+            
+            <div class="slds-col slds-size_3-of-12">
+                names list : {names} 
+
+                <template for:each={names} for:item="var1">
+                    <div class="slds-col slds-size_3-of-12 slds-p-around_medium" key={var1}>
+                        {var1}        
+                    </div>    
+                </template>           
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium">
+                <lightning-combobox
+                label="Picklist 1"
+                value={pl1Selected}
+                options={pl1Options}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium">
+                <lightning-combobox
+                label="Picklist 2"
+                value={pl2Selected}
+                options={pl2Options}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_medium">
+                <lightning-combobox
+                label="Picklist 3"
+                value={pl3Selected}
+                options={pl3Options}>
+                </lightning-combobox>
+            </div>
+        </div>
+    </lightning-card>
+</template>

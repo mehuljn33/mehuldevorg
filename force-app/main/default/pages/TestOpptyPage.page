@@ -1,0 +1,6 @@
+<apex:page standardController="Opportunity">
+    <apex:form >
+    <apex:inputField value="{!Opportunity.name}"/>
+    <apex:commandButton value="save" action="{!save}"/>    
+    </apex:form>
+</apex:page>

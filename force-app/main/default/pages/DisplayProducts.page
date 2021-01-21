@@ -1,0 +1,21 @@
+<apex:page controller="ShoppingCartController" action="{!fetchList}">
+<apex:form >
+<apex:pageblock >
+<apex:pageBlockSection columns="4">
+<apex:pageBlockTable value="{!productList}" var="item" rules="rows" id="table">
+<apex:column value="{!item.Name}"/>
+<apex:column value="{!item.ProductCode}"/>
+<apex:column value="{!item.Price__c}"/>
+<apex:column ><apex:inputCheckbox value="{!item.Added_to_cart__c}"/></apex:column>
+</apex:pageBlockTable>
+</apex:pageBlockSection>
+</apex:pageblock>
+<apex:commandButton value="add to cart" action="{!addToCart}"/>
+</apex:form>
+
+<script type="javascript">
+
+    
+</script>
+
+</apex:page>

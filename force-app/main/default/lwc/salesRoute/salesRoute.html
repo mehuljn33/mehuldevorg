@@ -1,0 +1,31 @@
+<template>
+    
+    <lightning-layout horizontal-align="start" class="slds-grid slds-wrap">
+        <lightning-layout-item class="slds-size_12-of-12 slds-large-size_2-of-12 slds-p-around_small">
+            <lightning-card >
+                <div class="slds-p-around_small" style="cursor:pointer;" >
+                    
+                    <lightning-input label="Choose the date :" type="date" 
+                                    value={currentDate} onchange={setCurrentDate}>
+                    </lightning-input>
+                    <br/>
+                    <!--<template for:each={eventList} for:item="event" for:index="index">
+                        <lightning-layout class="slds-p-around_small" key={event.Id}>
+                            <lightning-layout-item><b>{event.Subject}</b></lightning-layout-item> 
+                        </lightning-layout>
+                    </template>-->
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_12-of-12 slds-p-around_medium">
+            <lightning-card>
+                <lightning-map class="slds-p-around_small"
+                            map-markers={mapEventMarkers}
+                            markers-title={markersTitle}
+                        ></lightning-map>
+            </lightning-card>
+        </lightning-layout-item>
+        
+    </lightning-layout> 
+    
+</template>

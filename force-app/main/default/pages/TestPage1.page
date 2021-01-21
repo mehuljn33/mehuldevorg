@@ -1,0 +1,112 @@
+<apex:page standardController="Account" extensions="TestPage1Controller" >
+
+    <script>
+    // passing html input values to controller
+    function calc(id, location){
+    alert(location);
+     
+        updateLocations(id, location);
+    }
+    
+    function populateoutput(value){
+    document.getElementById('pgblck').value = value*100;
+    }
+    
+    </script>
+
+    <!-- showing selected picklist value -->
+    <apex:form >
+         <apex:pageBlock title="show result based on picklist">
+           user modified formula :  <apex:inputField value="{!account.User_modifed__c}"/>
+           <br/>
+           
+           <br/>
+           formlua on vf : <apex:outputText value="{!account.Owner.Username + $Profile.Name}"/>
+           <br/>
+            <apex:selectList value="{!selection}" size="1">
+              <apex:actionSupport event="onclick" rerender="showresult"/>              
+              <apex:selectOptions value="{!myList}" />
+           </apex:selectList>
+           
+            <apex:outputPanel id="showresult">
+             <br/> selection is : <br/> {!selection}
+            </apex:outputPanel>
+         </apex:pageBlock>
+
+    </apex:form>
+    
+    
+    <!-- calculating using vf based formulas, use javascript -->
+    <apex:form > 
+        <apex:actionFunction action="{!updateLocations}" name="calc">
+            <apex:param name="id"  assignTo="{!recid}" value=""/>
+            <apex:param name="location"  assignTo="{!location}" value=""/>
+        </apex:actionFunction>
+    	<apex:pageBlock title="calculate field result using javascript formula">
+    	      <apex:outputPanel rendered="{!IF(records.size < 1 , true , false)}">
+                <apex:pageMessage severity="ERROR" summary="No records to display"/>
+            </apex:outputPanel>
+        	<apex:pageBlockTable var="a" value="{!records}" rendered="{!IF(records.size > 0 , true , false)}">
+                <apex:column value="{!a.name}"/>
+                <apex:column value="{!a.SLASerialNumber__c}" />
+                <apex:column >
+                    <apex:inputtext value="{!a.NumberofLocations__c}" id="inp" onblur="calc('{!a.id}','{!a.NumberofLocations__c}')">
+                    <apex:actionSupport event="onblur" reRender="tot" />
+                     </apex:inputtext> 
+                </apex:column>
+                <apex:column title="total" id="tot"><apex:outputtext value="{!a.NumberofLocations__c * 10}" /></apex:column>
+                
+          </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+    
+    
+  <!-- fetching current selected record from apex table, checkbox and button on each colum as well-->  
+   <apex:form >
+    <apex:pageBlock title="contacts" >
+       <apex:pageBlockTable var="c" value="{!contacts}">
+           <apex:column >
+           <apex:inputCheckbox >
+               <apex:actionSupport action="{!addToselectedlist}" event="onclick" reRender="listofid">
+                   <apex:param name="iop" value="{!c.name}" assignTo="{!selected}"/>
+               </apex:actionSupport>
+               </apex:inputCheckbox>
+           </apex:column>
+        <apex:column value="{!c.name}"/>
+         <apex:column value="{!c.account.name}"/>
+         <apex:column >
+             <apex:commandButton action="{!mydel}" value="delete" reRender="conttable" >
+             <apex:param value="{!c.id}" assignTo="{!contid}" />
+             </apex:commandButton>
+           </apex:column>
+        </apex:pageBlockTable>
+        <apex:outputPanel id="conttable">
+      selection =   {!selection}
+        </apex:outputPanel>
+        
+         <apex:outputPanel id="listofid">
+             ids list = 
+        <apex:repeat value="{!selectedIds}" var="ids" >
+           
+            {!ids}
+          
+        </apex:repeat>
+          </apex:outputPanel> 
+        
+       </apex:pageBlock>
+       
+    </apex:form>
+
+</apex:page>
+
+
+<!--<apex:page standardController="Account" recordSetVar="accounts">
+ 
+   <apex:repeat var="a" value="{!accounts}">
+       {!a.name}<br/>
+       <apex:repeat var="c" value="{!a.contacts}">
+          {!c.name} 
+       </apex:repeat>
+       <br/> <br/>
+    </apex:repeat>
+</apex:page>-->

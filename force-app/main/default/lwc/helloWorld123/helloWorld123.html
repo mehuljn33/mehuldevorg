@@ -1,0 +1,46 @@
+<template>
+
+    <!--<lightning-card title="HelloWorld" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <p>Hello, {greeting}!</p>
+            <lightning-input label="Name" value={greeting} onchange={changeHandler}></lightning-input>
+        </div>
+    </lightning-card>-->
+
+      <c-contact-selector account-id="0010K000028ldDN">
+            
+        </c-contact-selector>
+
+    <lightning-card title="HelloWorld" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <p>Hello now, {greeting}!</p>
+            <lightning-input label="Name" value={greeting} onchange={changeHandler}></lightning-input>
+        </div>
+    </lightning-card>
+    <template if:true={mymessage}>
+        {mymessage} displaying only if true
+        new string : {teststr}
+        error string : {errorstr}
+    </template>
+
+    <template if:true={userDisplay}>
+        user display text : {userDisplay.data} <br/>
+        new string value : {newString}
+    </template>
+    <lightning-button label="click" onclick={handleClick}> 
+
+    </lightning-button>
+    <lightning-card title="data table example">
+        <lightning-datatable
+            data={lstCon1}
+            columns={columns}
+            key-field="Id"
+            onsave={handleSave}
+            draft-values={draftValues}
+            >
+        </lightning-datatable>
+    </lightning-card>
+    <template if:true={lstCon}>  
+    <p>lstcon latest : {lstCon.data}</p>
+    </template>
+</template>
