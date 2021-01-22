@@ -10,7 +10,9 @@ public Boolean showNotes {get;set;}
 public AccNotesController(){
     myUser = new User();
     id= ApexPages.currentPage().getParameters().get('id');
+
         System.debug('test commit debug for 21 jan v1');
+
         if(id == null){
         myUser.id = userinfo.getuserId();
         myUser.Email = userinfo.getUserEmail();
