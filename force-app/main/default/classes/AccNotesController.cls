@@ -21,6 +21,7 @@ public AccNotesController(){
         System.debug('test commit debug for 22 jan v2');
         System.debug('test commit debug for master external');
         System.debug('test commit debug for only repo changes');
+        System.debug('test commit debug for only repo changes v2');
         else{
         myUser=[Select Name, Email, Alias  
                 from User 
